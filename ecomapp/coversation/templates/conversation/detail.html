@@ -1,0 +1,22 @@
+{% extends 'core/base.html'%}
+{% block title%} Coversation {% endblock %}
+{% block content%}
+<h1 class='mb-6 mt-3 text-3xl'>Inbox</h1>
+<div class='space-y-6 mb-6'>
+    {% for message in conversation.message.all %}
+   
+    <div class='p-6 flex {% if message.created_by != request.user  %} bg-gray-100 {% else %}bg-blue-200 {% endif %} rounded-xl'>
+    <div>
+        <p class='mb-4'><strong>{{message.created_by.username}}</strong> @ {{message.created_at}}</p>
+        <p>{{message.content}}</P>
+        </div>
+    </div>
+
+{% endfor %}
+</div>
+<form method='POST' action='.'>
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button class='py-4 px-8 text-md  mb-6 bg-teal-500 rounded-xl hover:bg-teal-700'>send</button>
+</form>
+{% endblock %}

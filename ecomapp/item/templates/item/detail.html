@@ -1,0 +1,54 @@
+{% extends 'core\base.html' %}
+{% block title%}{{item.name}}{% endblock %}
+{% block content %}
+<div class='grid grid-cols-5 rounded-lg mt-6 mb-6'>
+    
+    <div class='col-span-3  h-60'>
+        <img src='{{item.image.url}}' class='w-full h-full rounded-xl px-8'>    
+    </div>
+    <div class='col-span-2 p-6 rounded-xl bg-gray-200 gap-6'>
+        <h1><strong>{{item.name}}</strong></h1>
+        {% if item.description %}
+        <h2> Description:{{item.description}}</h2>
+        {% endif %}
+        <h2>Price: {{item.price}}</h2>
+        <h2>Created By: {{item.created_by}}</h2>
+        {% if request.user == item.created_by %}
+        <div class='mt-6 p-6 bg-white rounded-xl'>
+            <p> This is your item!  </p>
+            <a href='{% url 'item:edit' item.id %}' class='inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl'>Edit</a>
+            <a href='{% url 'item:delete' item.id %}' class='inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl'>Delete</a>
+            </div>
+        {% else %}
+        <a href='{% url 'conversation:new' item.id %}' class='inline-block mt-6 px-6 py-3 font-semibold text-white bg-teal-500 hover:bg-teal-800 rounded-xl px-6'>Contact Seller</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class='mt-6 mb-6 px-6 py-12 bg-gray-100 rounded-xl'>
+    <h2 class='mb-12 text-2xl text-center'>Related Items</h2>
+
+<div class='grid grid-cols-3 gap-3'>
+    {% for item in related_items%}
+    <div>
+        <a href='{%url 'item:detail' item.id %}'>
+    <div>   
+        <img src='{{ item.image.url }}' class='rounded-xl w-60 h-60'>
+    </div>
+    <div class='p-6 bg-white rounded-b-xl'>
+        <h2 class='text-2xl'>{{item.name}}</h2>
+        <p class='text-gray-500'>Price:{{item.price}}</p>
+        {% if item.description %}
+        <p class='text-gray-500'>Description:{{item.description}}</p>
+        {% endif %}
+    </div>
+        </a>
+    
+    </div>
+
+    {% endfor %}
+</div>
+</div>
+
+{% endblock %} 
+

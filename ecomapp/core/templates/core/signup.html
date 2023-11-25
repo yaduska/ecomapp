@@ -1,0 +1,38 @@
+{% extends 'core\base.html' %}
+{% block title %} Signup{% endblock%}
+{% block content %}
+<div class='my-6 mx-3 px-6 py-6 rounded-xl bg-gray-100 w-1/2'>
+    <h1 class='mb-x text-3xl'> Signup</h1>
+    <form method='post' action='.'>
+        {% csrf_token %}
+        <div class='mt-3 mb-3'>
+            <label class='inline-block mb-2'>User Name</label></br>
+            {{ signupForm.username }}
+        </div>
+        <div class='mb-3'>
+            <label class='inline-block mb-2'>Email</label></br>
+            {{signupForm.email}}
+        </div>
+        <div class='mb-3'>
+            <label class='inline-block mb-2'>Password</label></br>
+            {{signupForm.password1}}
+        </div>
+        <div class='mb-3'>
+            <label class='inline-block mb-2'>Confirm Password</label></br>
+            {{signupForm.password2}}
+        </div>
+    {% if signupForm.error or signupForm.non_field_errors  %}
+        <div class='mb-3 p-6 rounded-xl bg-red-700'>
+            {% for field in signupForm %}
+            {{ field.error }}
+            {% endfor %}
+            {{ signupForm.non_field_errors }}
+        </div>
+        {% endif %} 
+      
+            <button class='py-4 px-8 text-md  bg-teal-500 rounded-xl hover:bg-teal-700'>submit</button>
+           
+           
+    </form>
+</div>
+{% endblock %}
